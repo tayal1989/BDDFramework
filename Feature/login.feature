@@ -46,6 +46,8 @@ And User clicks on login button
 And User is on home page with message as "<message>"
 And User closes the browser
 
+#This examples keyword is applicable for the entire test case
+#This is applicable for Given, When or Then condition
 Examples:
 	|	username | password | message |
 	| tayal1989@gmail.com | Com@1357 | Cogmento CRM |
