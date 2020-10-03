@@ -46,6 +46,19 @@ public class LoginStepDefinition {
 		Assert.assertEquals("Cogmento CRM", title);
 	}
 	
+	@Then("^User enters \"(.*)\" and \"(.*)\"$")
+	public void user_enters_username_and_password(String username, String password) {
+		driver.findElement(By.name("email")).sendKeys(username);
+		driver.findElement(By.name("password")).sendKeys(password);
+	}
+	
+	@Then("^User is on home page with message as \"(.*)\"$")
+	public void user_is_on_home_page(String message) {
+		String title = driver.getTitle();
+		System.out.println("Home Page title ::"+ title);
+		Assert.assertEquals(message, title);
+	}
+	
 	@Then("^User closes the browser$")
 	public void user_closes_browser() {
 		driver.quit();
