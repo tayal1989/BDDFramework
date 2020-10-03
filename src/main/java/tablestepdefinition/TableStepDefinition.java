@@ -1,6 +1,7 @@
 package tablestepdefinition;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -33,10 +34,15 @@ public class TableStepDefinition {
 
 	@Then("^User enters username and password$")
 	public void user_enters_username_and_password(DataTable credentials) {
-		List<List<String>> data = credentials.raw();
-		for(int i = 0 ; i < data.size() ; i++) {
-			driver.findElement(By.name("email")).sendKeys(data.get(i).get(0));
-			driver.findElement(By.name("password")).sendKeys(data.get(i).get(1));
+//		List<List<String>> data = credentials.raw();	// for table data
+//		for(int i = 0 ; i < data.size() ; i++) {	// for table data
+//			driver.findElement(By.name("email")).sendKeys(data.get(i).get(0));
+//			driver.findElement(By.name("password")).sendKeys(data.get(i).get(1));
+//		}
+		
+		for(Map<String, String> map : credentials.asMaps(String.class, String.class)) {	// for table maps
+			driver.findElement(By.name("email")).sendKeys(map.get("username"));
+			driver.findElement(By.name("password")).sendKeys(map.get("password"));
 		}
 	}
 
@@ -47,10 +53,22 @@ public class TableStepDefinition {
 
 	@Then("^User is on home page with message$")
 	public void user_is_on_home_page_with_message(DataTable message) {
-		for(int i = 0 ; i < message.raw().size() ; i++) {
+		/*
+		 * For handling table single data
+		 */
+//		for(int i = 0 ; i < message.raw().size() ; i++) {
+//			String title = driver.getTitle();
+//			System.out.println("Home Page title ::"+ title);
+//			Assert.assertEquals(message.raw().get(i).get(0), title);
+//		}
+		
+		/*
+		 * For handling table multiple data
+		 */
+		for(Map<String, String> map : message.asMaps(String.class, String.class)) {
 			String title = driver.getTitle();
 			System.out.println("Home Page title ::"+ title);
-			Assert.assertEquals(message.raw().get(i).get(0), title);
+			Assert.assertEquals(map.get("message"), title);
 		}
 	}
 	

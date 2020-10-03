@@ -5,19 +5,25 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class LoginStepDefinition {
 	WebDriver driver ;
-
-	@Given("^User is already on Login Page$")
-	public void user_is_already_on_Login_Page() {
+	
+	@Before
+	public void instantiateBrowser() {
 		System.setProperty("webdriver.chrome.driver",
 				System.getProperty("user.dir") + "/resources/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
+	}
+
+	@Given("^User is already on Login Page$")
+	public void user_is_already_on_Login_Page() {
 		driver.get("https://ui.cogmento.com/");
 	}
 
@@ -61,6 +67,11 @@ public class LoginStepDefinition {
 	
 	@Then("^User closes the browser$")
 	public void user_closes_browser() {
+		System.out.println("Close browser");
+	}
+	
+	@After
+	public void tearDown() {
 		driver.quit();
 	}
 }
